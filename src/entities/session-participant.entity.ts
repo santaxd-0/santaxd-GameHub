@@ -1,16 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { GameSessions } from "./game-sessions.entity";
 import { User } from "./user.entity";
 
-@Entity()
+@Entity("session-participant")
 export class SessionParticipant {
-    @PrimaryGeneratedColumn()
-    id: number;
-
-    @Column()
+    @PrimaryColumn()
     sessionId: number;
 
-    @Column()
+    @PrimaryColumn()
     userId: number;
 
     @Column("int", {
@@ -23,14 +20,14 @@ export class SessionParticipant {
     })
     isMVP: boolean;
 
-    @Column("timestamp", {
-        default: Date.now()
-    })
+    @CreateDateColumn()
     joinedAt: Date;
 
     @ManyToOne(() => GameSessions, (gameSession) => gameSession.sessionParticipants)
+    @JoinColumn({name: "sessionId"})
     session: GameSessions;
 
     @ManyToOne(() => User, (user) => user.gameSessionsJoined)
+    @JoinColumn({name: "userId"})
     user: User
 }

@@ -1,8 +1,8 @@
 import { Categories } from "src/enums/category.enum";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserAchievement } from "./user-achievement.entity";
 
-@Entity()
+@Entity("achievements")
 export class Achievement {
     @PrimaryGeneratedColumn()
     id: number;
@@ -21,7 +21,7 @@ export class Achievement {
     })
     category: Categories;
 
-    @Column("timestamp")
+    @CreateDateColumn()
     createdAt: Date;
 
     @OneToMany(() => UserAchievement, (userAchievement) => userAchievement.achievement)

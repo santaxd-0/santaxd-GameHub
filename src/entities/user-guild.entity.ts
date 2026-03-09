@@ -1,9 +1,9 @@
 import { Role } from "src/enums/role.enum";
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { User } from "./user.entity";
 import { Guild } from "./guild.entity";
 
-@Entity()
+@Entity("user-guild")
 export class UserGuild {
     @PrimaryColumn()
     userId: number;
@@ -17,12 +17,14 @@ export class UserGuild {
     })
     role: Role;
     
-    @Column("timestamp")
+    @CreateDateColumn()
     joinedAt: Date;
 
     @ManyToOne(() => User, (user) => user.guildsJoined)
+    @JoinColumn({name: "userId"})
     user: User;
 
     @ManyToOne(() => Guild, (guild) => guild.usersJoined)
+    @JoinColumn({name: "guildId"})
     guild: Guild;
 }

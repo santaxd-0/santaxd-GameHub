@@ -1,25 +1,25 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { GameSessions } from "./game-sessions.entity";
 import { UserGuild } from "./user-guild.entity";
 import { SessionParticipant } from "./session-participant.entity";
 import { UserAchievement } from "./user-achievement.entity";
 
-@Entity()
+@Entity("users")
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column("string")
+    @Column()
     username: string;
 
     @Column("string")
     email: string;
 
-    @Column("varchar", {length: 16})
+    @Column()
     password: string;
 
-    @Column("varchar", {length: 5})
-    gametag: string;
+    @Column("varchar", {length: 20, nullable: true})
+    gamertag: string;
 
     @Column("string")
     avatar: string;
@@ -30,10 +30,10 @@ export class User {
     @Column("int")
     totalScore: number;
 
-    @Column("timestamp")
+    @CreateDateColumn()
     createdAt: Date;
 
-    @OneToMany(() => GameSessions, (session) => session.creatorId)
+    @OneToMany(() => GameSessions, (session) => session.creator)
     gameSessionsCreated: GameSessions[];
 
     @OneToMany(() => UserGuild, (userGuild) => userGuild.user)
