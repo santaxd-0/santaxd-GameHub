@@ -12,7 +12,7 @@ export class User {
     @Column()
     username: string;
 
-    @Column("string")
+    @Column("text")
     email: string;
 
     @Column()
@@ -21,13 +21,19 @@ export class User {
     @Column("varchar", {length: 20, nullable: true})
     gamertag: string;
 
-    @Column("string")
+    @Column("text", {
+        default: null
+    })
     avatar: string;
 
-    @Column("int")
+    @Column("int", {
+        default: 0
+    })
     level: number;
 
-    @Column("int")
+    @Column("int", {
+        default: 1
+    })
     totalScore: number;
 
     @CreateDateColumn()

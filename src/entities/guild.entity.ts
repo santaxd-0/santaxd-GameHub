@@ -7,13 +7,13 @@ export class Guild {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column("string")
+    @Column("char")
     name: string;
 
     @Column("char", {length: 5, unique: true})
     tag: string;
 
-    @Column("string")
+    @Column("char")
     description: string;
 
     @Column("int", {default: 50})

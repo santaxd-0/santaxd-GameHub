@@ -7,13 +7,13 @@ export class Achievement {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column("string")
+    @Column("text")
     name: string;
 
-    @Column("string")
+    @Column("text")
     description: string;
 
-    @Column("url")
+    @Column("text")
     icon: string;
 
     @Column("enum", {

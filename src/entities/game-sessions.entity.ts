@@ -9,10 +9,10 @@ export class GameSessions {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column("string")
+    @Column("char")
     title: string;
 
-    @Column("string")
+    @Column("text")
     gameName: string;
 
     @Column("timestamp")
