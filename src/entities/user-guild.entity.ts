@@ -1,4 +1,4 @@
-import { Role } from "src/enums/role.enum";
+import { GuildRoles } from "src/enums/guild-roles.enum";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { User } from "./user.entity";
 import { Guild } from "./guild.entity";
@@ -12,10 +12,10 @@ export class UserGuild {
     guildId: number;
 
     @Column("enum", {
-        enum: Role,
-        default: Role.MEMBER
+        enum: GuildRoles,
+        default: GuildRoles.MEMBER
     })
-    role: Role;
+    role: GuildRoles;
     
     @CreateDateColumn()
     joinedAt: Date;

@@ -22,7 +22,8 @@ export class User {
     gamertag: string;
 
     @Column("text", {
-        default: null
+        default: null,
+        nullable: true
     })
     avatar: string;
 
