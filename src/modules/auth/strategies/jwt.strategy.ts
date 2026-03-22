@@ -13,7 +13,7 @@ export class JWTStrategy extends PassportStrategy(Strategy) {
         @InjectRepository(User)
         private userRepository: Repository<User>
     ) {
-        const secret = configService.get<string>('JWT_SECRET');
+        const secret = configService.get<string>('SECRET_TOKEN');
         if (!secret) {
             throw new Error('JWT_SECRET is not defined in environment variables');
         }

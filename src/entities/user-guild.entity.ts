@@ -1,30 +1,37 @@
-import { GuildRoles } from "src/enums/guild-roles.enum";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
-import { User } from "./user.entity";
-import { Guild } from "./guild.entity";
+import { GuildRoles } from 'src/enums/guild-roles.enum';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from 'typeorm';
+import { User } from './user.entity';
+import { Guild } from './guild.entity';
 
-@Entity("user-guild")
+@Entity('user-guild')
 export class UserGuild {
-    @PrimaryColumn()
-    userId: number;
+  @PrimaryColumn()
+  userId: number;
 
-    @PrimaryColumn()
-    guildId: number;
+  @PrimaryColumn()
+  guildId: number;
 
-    @Column("enum", {
-        enum: GuildRoles,
-        default: GuildRoles.MEMBER
-    })
-    role: GuildRoles;
-    
-    @CreateDateColumn()
-    joinedAt: Date;
+  @Column('enum', {
+    enum: GuildRoles,
+    default: GuildRoles.MEMBER,
+  })
+  role: GuildRoles;
 
-    @ManyToOne(() => User, (user) => user.guildsJoined)
-    @JoinColumn({name: "userId"})
-    user: User;
+  @CreateDateColumn()
+  joinedAt: Date;
 
-    @ManyToOne(() => Guild, (guild) => guild.usersJoined)
-    @JoinColumn({name: "guildId"})
-    guild: Guild;
+  @ManyToOne(() => User, (user) => user.guildsJoined)
+  @JoinColumn({ name: 'userId' })
+  user: User;
+
+  @ManyToOne(() => Guild, (guild) => guild.usersJoined)
+  @JoinColumn({ name: 'guildId' })
+  guild: Guild;
 }
