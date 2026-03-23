@@ -1,8 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
   ParseBoolPipe,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -13,6 +16,8 @@ import { User } from 'src/entities/user.entity';
 import { CreateGuildDto } from './dto/create-guild.dto';
 import { JWTAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Public } from '../auth/decorators/public.decorator';
+import { AddMemberDto } from './dto/add-member.dto';
+import { UpdateMemberRoleDto } from './dto/update-member-role.dto';
 
 @Controller('guilds')
 export class GuildController {
@@ -40,5 +45,53 @@ export class GuildController {
   @UseGuards(JWTAuthGuard)
   getMyGuild(@CurrentUser() user: User) {
     return this.guildService.findMyGuilds(user.id);
+  }
+
+  @Get(':id')
+  @UseGuards(JWTAuthGuard)
+  getGuild(@CurrentUser() user: User, @Param('id') id: string) {
+    return this.guildService.findOne(user.id, +id);
+  }
+
+  @Post(':id/members')
+  @UseGuards(JWTAuthGuard)
+  addmember(
+    @CurrentUser() user: User,
+    @Param('id') id: string,
+    @Body() addMemberDto: AddMemberDto,
+  ) {
+    return this.guildService.addMember(user.id, +id, addMemberDto);
+  }
+
+  @Delete(':id/members/:targetUserId')
+  @UseGuards(JWTAuthGuard)
+  removeMember(
+    @CurrentUser() user: User,
+    @Param('id') id: string,
+    @Param('targetUserId') targetUserId: string,
+  ) {
+    return this.guildService.removeMember(user.id, +id, +targetUserId);
+  }
+
+  @Patch(':id/members/:targetUserId/role')
+  @UseGuards(JWTAuthGuard)
+  updateMemberRole(
+    @CurrentUser() user: User,
+    @Param('id') id: string,
+    @Param('targetUserId') targetUserId: string,
+    @Body() updateMemberRoleDto: UpdateMemberRoleDto,
+  ) {
+    return this.guildService.updateMemberRole(
+      user.id,
+      +id,
+      +targetUserId,
+      updateMemberRoleDto,
+    );
+  }
+
+  @Post(':id/leave')
+  @UseGuards(JWTAuthGuard)
+  leaveGuild(@CurrentUser() user: User, @Param('id') id: string) {
+    return this.guildService.leaveGuild(user.id, +id);
   }
 }
