@@ -10,6 +10,6 @@ import { UserGuild } from 'src/entities/user-guild.entity';
   imports: [TypeOrmModule.forFeature([Guild, UserGuild]), AuthModule],
   providers: [GuildService],
   controllers: [GuildController],
-  exports: [],
+  exports: [GuildService],
 })
 export class GuildModule {}
