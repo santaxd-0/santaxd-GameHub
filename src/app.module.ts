@@ -7,6 +7,8 @@ import { getDatabaseConfig } from './config/database.config';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { GuildModule } from './modules/guild/guild.module';
+import { SessionModule } from './modules/session/session.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -14,9 +16,19 @@ import { GuildModule } from './modules/guild/guild.module';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot(getDatabaseConfig()),
+    EventEmitterModule.forRoot({
+      wildcard: true,
+      delimiter: '.',
+      newListener: false,
+      removeListener: false,
+      maxListeners: 10,
+      verboseMemoryLeak: false,
+      ignoreErrors: false,
+    }),
     AuthModule,
     UserModule,
     GuildModule,
+    SessionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
