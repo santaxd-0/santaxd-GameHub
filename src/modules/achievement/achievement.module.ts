@@ -3,11 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Achievement } from 'src/entities/achievement.entity';
 import { UserAchievement } from 'src/entities/user-achievement.entity';
 import { User } from 'src/entities/user.entity';
+import { AchievementService } from './achievement.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Achievement, UserAchievement, User])],
-  exports: [],
-  providers: [],
+  exports: [AchievementService],
+  providers: [AchievementService],
   controllers: [],
 })
 export class AchievementModule {}
