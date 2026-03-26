@@ -9,6 +9,7 @@ import { UserModule } from './modules/user/user.module';
 import { GuildModule } from './modules/guild/guild.module';
 import { SessionModule } from './modules/session/session.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { AchievementModule } from './modules/achievement/achievement.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     UserModule,
     GuildModule,
     SessionModule,
+    AchievementModule,
   ],
   controllers: [AppController],
   providers: [AppService],

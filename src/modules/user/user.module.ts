@@ -4,9 +4,12 @@ import { User } from 'src/entities/user.entity';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { SessionParticipant } from 'src/entities/session-participant.entity';
+import { UserAchievement } from 'src/entities/user-achievement.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, SessionParticipant])],
+  imports: [
+    TypeOrmModule.forFeature([User, SessionParticipant, UserAchievement]),
+  ],
   controllers: [UserController],
   providers: [UserService],
   exports: [],

@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { GameSessionsService } from './session.service';
-import { OnEvent } from '@nestjs/event-emitter';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { User } from 'src/entities/user.entity';
 
 export class StatsService {
@@ -11,6 +11,7 @@ export class StatsService {
     private userRepository: Repository<User>,
     @Inject(GameSessionsService)
     private gameSessionsService: GameSessionsService,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   @OnEvent('session.completed')
@@ -31,6 +32,10 @@ export class StatsService {
           { id: participant.userId },
           { totalScore: userUpdateTotalScore, level: newLevel },
         );
+
+        this.eventEmitter.emit('users.stats.updated', {
+          userId: participant.userId,
+        });
       }
     });
   }

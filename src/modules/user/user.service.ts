@@ -1,5 +1,4 @@
 import {
-  ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -9,6 +8,7 @@ import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SessionParticipant } from 'src/entities/session-participant.entity';
+import { UserAchievement } from 'src/entities/user-achievement.entity';
 
 @Injectable()
 export class UserService {
@@ -17,6 +17,8 @@ export class UserService {
     private userRepository: Repository<User>,
     @InjectRepository(SessionParticipant)
     private sessionParticipantRepository: Repository<SessionParticipant>,
+    @InjectRepository(UserAchievement)
+    private userAchievementRepository: Repository<UserAchievement>,
   ) {}
 
   async findOne(id: number) {
@@ -50,11 +52,23 @@ export class UserService {
       isMVP: true,
     });
 
+    const notSortedUserAchievements = await this.userAchievementRepository.find(
+      {
+        where: { userId },
+        relations: ['achievement'],
+      },
+    );
+
+    const userAchievements = notSortedUserAchievements.map(
+      (userAchievement) => userAchievement.achievement,
+    );
+
     return {
       level: user.level,
       totalScore: user.totalScore,
       gamesPlayed,
       MVP,
+      achievements: userAchievements,
     };
   }
 }
