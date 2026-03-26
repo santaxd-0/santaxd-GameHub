@@ -240,4 +240,19 @@ export class GuildService {
       message: 'success',
     };
   }
+
+  async showGuildLeaderboard(guildId: number) {
+    const guildUsers = await this.userGuildRepository.find({
+      where: { guildId },
+      relations: ['user'],
+      order: {
+        user: {
+          totalScore: 'DESC',
+        },
+      },
+      take: 10,
+    });
+
+    return guildUsers;
+  }
 }

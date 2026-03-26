@@ -63,6 +63,18 @@ export class GuildController {
     return this.guildService.addMember(user.id, +id, addMemberDto);
   }
 
+  @Post(':id/leave')
+  @UseGuards(JWTAuthGuard)
+  leaveGuild(@CurrentUser() user: User, @Param('id') id: string) {
+    return this.guildService.leaveGuild(user.id, +id);
+  }
+
+  @Get(':id/leaderboard')
+  @Public()
+  showLeaderboard(@Param('id') guildId: string) {
+    return this.guildService.showGuildLeaderboard(+guildId);
+  }
+
   @Delete(':id/members/:targetUserId')
   @UseGuards(JWTAuthGuard)
   removeMember(
@@ -87,11 +99,5 @@ export class GuildController {
       +targetUserId,
       updateMemberRoleDto,
     );
-  }
-
-  @Post(':id/leave')
-  @UseGuards(JWTAuthGuard)
-  leaveGuild(@CurrentUser() user: User, @Param('id') id: string) {
-    return this.guildService.leaveGuild(user.id, +id);
   }
 }
