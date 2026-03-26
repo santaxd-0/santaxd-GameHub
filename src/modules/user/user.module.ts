@@ -12,6 +12,6 @@ import { UserAchievement } from 'src/entities/user-achievement.entity';
   ],
   controllers: [UserController],
   providers: [UserService],
-  exports: [],
+  exports: [UserService],
 })
 export class UserModule {}

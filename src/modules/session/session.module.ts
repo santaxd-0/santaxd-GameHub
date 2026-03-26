@@ -7,10 +7,11 @@ import { GameSessionsController } from './session.controller';
 import { GuildModule } from '../guild/guild.module';
 import { SessionParticipant } from 'src/entities/session-participant.entity';
 import { StatsService } from './services/stats.service';
+import { User } from 'src/entities/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([GameSessions, SessionParticipant]),
+    TypeOrmModule.forFeature([GameSessions, SessionParticipant, User]),
     AuthModule,
     GuildModule,
   ],

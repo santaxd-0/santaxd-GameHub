@@ -28,7 +28,9 @@ export class Achievement {
   })
   category: Categories;
 
-  @Column('enum')
+  @Column('enum', {
+    enum: AchievementCriteriaType,
+  })
   criteriaType: AchievementCriteriaType;
 
   @Column()
